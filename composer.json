@@ -11,15 +11,27 @@
     ],
     "require": {
         "php": ">=8.3",
-        "acquia/acquia-cms-starterkit": "^1",
         "acquia/drupal-environment-detector": "^1",
         "acquia/drupal-recommended-settings": "^1.0",
         "acquia/memcache-settings": "^1",
         "composer/installers": "^2.1",
         "cweagans/composer-patches": "^1.6",
+        "drupal/cms": "^1",
         "drupal/config_sync_without_site_uuid": "^1.0@beta",
         "drupal/core-composer-scaffold": "^11",
         "drupal/core-recommended": "^11",
+        "drupal/drupal_cms_accessibility_tools": "*",
+        "drupal/drupal_cms_ai": "*",
+        "drupal/drupal_cms_analytics": "*",
+        "drupal/drupal_cms_blog": "*",
+        "drupal/drupal_cms_case_study": "*",
+        "drupal/drupal_cms_events": "*",
+        "drupal/drupal_cms_forms": "*",
+        "drupal/drupal_cms_news": "*",
+        "drupal/drupal_cms_person": "*",
+        "drupal/drupal_cms_project": "*",
+        "drupal/drupal_cms_seo_tools": "*",
+        "drupal/drupal_cms_starter": "*",
         "drupal/mysql57": "^1.0",
         "drush/drush": "^13",
         "oomphinc/composer-installers-extender": "^2"
@@ -43,7 +55,8 @@
             "oomphinc/composer-installers-extender": true,
             "phpstan/extension-installer": true,
             "php-http/discovery": true,
-            "acquia/drupal-recommended-settings": true
+            "acquia/drupal-recommended-settings": true,
+            "drupal/core-project-message": false
         },
         "platform": {
             "php": "8.3"
@@ -105,6 +118,9 @@
             ],
             "drush/Commands/contrib/{$name}": [
                 "type:drupal-drush"
+            ],
+            "recipes/{$name}": [
+                "type:drupal-recipe"
             ]
         },
         "installer-types": [
@@ -125,12 +141,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "acms:install": [
-            "Composer\\Config::disableProcessTimeout",
-            "./vendor/bin/acms acms:install"
-        ],
-        "nuke": [
-            "rm -rf docroot vendor composer.lock"
+        "post-update-cmd": [
+            "cp -R vendor/drupal/cms/web/profiles/drupal_cms_installer docroot/profiles/custom"
         ]
     }
 }
